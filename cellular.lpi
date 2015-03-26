@@ -33,7 +33,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="cellular.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -43,6 +43,7 @@
         <Filename Value="gui.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="gui"/>
       </Unit1>
@@ -51,6 +52,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="automat"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="automat.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="automat"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
