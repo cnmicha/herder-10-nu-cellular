@@ -13,9 +13,11 @@ type
   TAutomat = class
     altGen: array of TZustand;
     neueGen: array of TZustand;
+    regel: array[0..7] of TZustand;
     nummer: byte;
-    constructor Create; Overload;
-    procedure Create(nummmer: byte; length: cardinal); Overload;
+    constructor Create;
+    procedure regel_setzen(nr: byte);
+    procedure breite_setzen(br: cardinal);
     procedure startgeneration;
     procedure neue_gen_berechnen;
   end;
@@ -30,11 +32,22 @@ begin
   Randomize;
 end;
 
-procedure TAutomat.Create(nummmer: byte; length: cardinal);
+procedure TAutomat.regel_setzen(nr: byte);
+var
+  i: cardinal;
 begin
-  self.nummer := nummer;
-  setLength(self.alteGen, length);
-  setLength(self.neueGen, length);
+  self.nummer := nr;
+  for i := 0 to 7 do
+  begin
+    regel[i] := nr mod 2;
+    nr := nr div 2;
+  end;
+end;
+
+procedure TAutomat.breite_setzen(br: cardinal);
+begin
+  SetLength(self.neueGen, br);
+  SetLength(self.altGen, br);
 end;
 
 procedure TAutomat.startgeneration;
@@ -44,27 +57,23 @@ begin
   for i := 0 to Length(self.neueGen) - 1 do
   begin
     self.neueGen[i] := Random(2);
-
-    ShowMessage(IntToStr(self.neueGen[i]));
   end;
 end;
 
 procedure TAutomat.neue_gen_berechnen;
 var
-  i: cardinal;
+  i, regelpos: cardinal;
 begin
   self.altGen := self.neueGen;
 
-  //todo Nummer zurückrechnen
 
   for i := 0 to Length(self.neueGen) - 1 do
   begin
-    // i-1: length mod (i-1)
-
-    ShowMessage(IntToStr(self.neueGen[i]));
+    regelpos := altgen[(i - 1) mod Length(self.neueGen)] * 4 +
+      altgen[i mod Length(self.neueGen)] * 2 + altgen[(i + 1) mod Length(self.neueGen)];
+    neueGen[i] := self.regel[regelpos];
   end;
 end;
 
 end.
-
-
+
