@@ -18,6 +18,7 @@ type
     constructor Create;
     procedure regel_setzen(nr: byte);
     procedure breite_setzen(br: cardinal);
+    function breite_geben: cardinal;
     procedure startgeneration;
     procedure neue_gen_berechnen;
   end;
@@ -50,6 +51,11 @@ begin
   SetLength(self.altGen, br);
 end;
 
+function TAutomat.breite_geben: cardinal;
+begin
+  result:= length(self.altGen);
+end;
+
 procedure TAutomat.startgeneration;
 var
   i: cardinal;
@@ -75,4 +81,4 @@ begin
 end;
 
 end.
-
+

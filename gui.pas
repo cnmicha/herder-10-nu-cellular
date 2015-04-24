@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls;
+  ExtCtrls, automat;
 
 type
 
@@ -63,14 +63,53 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
+var
+  automat: TAutomat;
+  i, j, o: cardinal;
 begin
   ;
-  Image1.Width := StrToInt(edBreite.Text);
-  Image1.Height := StrToInt(edAnzahl.Text);
+
+  o := StrToInt(edAnzahl.Text);
+
+  automat := TAutomat.Create;
+  automat.breite_setzen(StrToInt(edBreite.Text));
+  automat.regel_setzen(StrToInt(edNummer.Text));
+
   ImageLeeren;
+  Image1.Width := automat.breite_geben;
+  Image1.Height := o;
   ImageKonstruieren;
-  Image1.canvas.Pixels[1, 1] := clBlack;
-  Image1.canvas.Pixels[1, 5] := clBlack;
+
+
+
+  if (o > 0) then
+  begin
+    automat.startgeneration;
+
+    for i := 0 to automat.breite_geben do
+    begin
+      if (automat.neueGen[i] = 1) then
+        Image1.canvas.Pixels[i, 0] := clBlack;
+    end;
+    Form1.update;
+  end;
+
+
+  if (o > 1) then
+  begin
+    for j := 1 to o do
+    begin
+      automat.neue_gen_berechnen;
+
+      for i := 0 to automat.breite_geben do
+      begin
+        if (automat.neueGen[i] = 1) then
+          Image1.canvas.Pixels[i, j] := clBlack;
+      end;
+      Form1.update;
+    end;
+  end;
+
 end;
 
-end.
+end.

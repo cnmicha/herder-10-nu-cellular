@@ -18,6 +18,7 @@ type
     constructor Create;
     procedure regel_setzen(nr: byte);
     procedure breite_setzen(br: cardinal);
+    function breite_geben: cardinal;
     procedure startgeneration;
     procedure neue_gen_berechnen;
   end;
@@ -50,6 +51,11 @@ begin
   SetLength(self.altGen, br);
 end;
 
+procedure TAutomat.breite_geben: cardinal;
+begin
+  result:= length(self.altGen);
+end;
+
 procedure TAutomat.startgeneration;
 var
   i: cardinal;
@@ -66,14 +72,13 @@ var
 begin
   self.altGen := self.neueGen;
 
-
   for i := 0 to Length(self.neueGen) - 1 do
   begin
-    regelpos := altgen[(i - 1) mod Length(self.neueGen)] * 4 +
+    regelpos := altGen[(i - 1) mod Length(self.neueGen)] * 4 +
       altgen[i mod Length(self.neueGen)] * 2 + altgen[(i + 1) mod Length(self.neueGen)];
     neueGen[i] := self.regel[regelpos];
   end;
 end;
 
 end.
-
+
